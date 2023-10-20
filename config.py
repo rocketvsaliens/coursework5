@@ -9,9 +9,11 @@ employer_ids = [1740, 4934, 3776, 1057, 78638, 2180, 3529, 6836, 1373, 23427]
 
 area_code = 113  # 53 - Краснодар
 
-max_count_vacancies = 100
+max_count_vacancies = 10
 
-JSON_DATA_DIR = os.path.join('../data')
+JSON_DATA_DIR = os.path.join('data')
+JSON_FILE_NAME = 'data.json'
+DB_NAME = 'headhunter'
 SQL_DATA_DIR = os.path.join('sql', 'table_queries.sql')
 
 
