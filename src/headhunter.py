@@ -96,18 +96,17 @@ class HeadHunter:
         :param filename: имя файла для сохранения вакансий
         """
         filepath = os.path.join(JSON_DATA_DIR, filename)
-        # Создаём директорию для файла, если её ещё нет
         directory = os.path.dirname(filepath)
         if not os.path.exists(directory):
             try:
                 os.makedirs(directory)
             except OSError as e:
-                print(f"Ошибка при создании директории: {e}")
+                print(f'Ошибка при создании директории: {e}')
                 return
-        # Записываем данные о вакансиях в файл json
+
         try:
             with open(filepath, 'w') as file:
                 json.dump(vacancy_list, file, indent=2, ensure_ascii=False)
-            print(f"Данные успешно записаны в файл")
+            print(f'Данные успешно записаны в файл {filename}')
         except Exception as e:
-            print(f"Ошибка при записи данных в файл: {e}")
+            print(f'Ошибка при записи данных в файл: {e}')

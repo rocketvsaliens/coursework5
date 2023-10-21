@@ -5,8 +5,8 @@ CREATE TABLE IF NOT EXISTS employers (
 
 CREATE TABLE IF NOT EXISTS vacancies (
     vacancy_id serial PRIMARY KEY,
-    employer_id integer REFERENCES employers (employer_id) ON DELETE CASCADE,
-    vacancy_title varchar NOT NULL,
+    employer_id int REFERENCES employers(employer_id) ON DELETE CASCADE,
+    vacancy_title varchar(255) NOT NULL,
     vacancy_url varchar(150) NOT NULL,
     vacancy_area varchar(80),
     salary_from int,
