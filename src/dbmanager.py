@@ -125,7 +125,7 @@ class DBManager:
 
     def get_avg_salary(self):
         """Получает среднюю зарплату по вакансиям"""
-        query = "SELECT AVG(ROUND((salary_from+salary_to)/2)) FROM vacancies"
+        query = "SELECT CAST(AVG((salary_from+salary_to)/2) AS INT) FROM vacancies"
         with self.__connect_to_database() as connection:
             with connection.cursor() as cur:
                 cur.execute(query)
