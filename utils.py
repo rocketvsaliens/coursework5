@@ -1,5 +1,7 @@
 from src.headhunter import HeadHunter
-from config import employer_ids, employer_ids_krd, JSON_FILE_NAME
+from src.dbmanager import DBManager
+from src.dbhandler import DBHandler
+from config import employer_ids, employer_ids_krd, JSON_FILE_NAME, SQL_DATA_DIR
 
 
 def get_started():
@@ -19,6 +21,38 @@ def get_started():
             vacancies_list = hh.get_vacancies_by_api(employer_ids_krd)
             hh.save_vacancies_to_json(vacancies_list, JSON_FILE_NAME)
             break
+        else:
+            print('Неверный ввод')
+            continue
+
+
+def create_and_fill_database():
+    """Создаёт базу данных с указанным пользователем именем и заполняет её данными из json"""
+    while True:
+        db_name = input('Введите слово на английском для названия базы данных: ')
+        if (all(one_letter in 'abcdefghijklmnopqrstuvwxyz1234567890' for one_letter in db_name)
+                and not db_name.isdigit()):
+            db = DBManager()
+            break
+        else:
+            print("Некорректный ввод. Проверьте раскладку и отсутствие кавычек. "
+                  "Имя БД должно содержать буквы или буквы и цифры")
+    db.create_database(db_name)  # создаём БД
+    db.create_table(SQL_DATA_DIR)  # создаём таблицы в БД
+    db.insert_data_to_table(JSON_FILE_NAME)  # заполняем таблицы
+
+    return db
+
+
+def work_with_database():
+    while True:
+        choice = input('Желаете получить сведения из базы данных? (1 - да, 0 - нет): ')
+        if choice == '1':
+            handler = DBHandler()
+            return handler
+        elif choice == '0':
+            print('Не смею вас больше задерживать. Хорошего дня!')
+            exit(0)
         else:
             print('Неверный ввод')
             continue

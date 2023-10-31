@@ -1,26 +1,23 @@
-from src.dbmanager import DBManager
-from config import JSON_FILE_NAME, DB_NAME, SQL_DATA_DIR
-from utils import (get_started, show_employers_and_vacancies_count, show_all_vacancies_info,
-                   show_avg_salary, show_highly_paid_vacancies, show_vacancies_by_keyword)
+import utils
+from src.dbhandler import DBHandler
 
 
 def main():
-    get_started()  # получаем вакансии
+    utils.get_started()  # получаем вакансии
 
-    db = DBManager()
-    db.create_database(DB_NAME)  # создаём БД
-    db.create_table(SQL_DATA_DIR)  # создаём таблицы в БД
-    db.insert_data_to_table(JSON_FILE_NAME)  # заполняем таблицы
+    utils.create_and_fill_database()  # создаём и заполняем БД
 
-    show_employers_and_vacancies_count(db)  # показываем работодателей и число вакансий
+    db_handler = utils.work_with_database()  # создаём экземпляр класса для работы с БД
 
-    show_all_vacancies_info(db)  # показываем все вакансии
+    utils.show_employers_and_vacancies_count(db_handler)  # показываем работодателей и число вакансий
 
-    show_avg_salary(db)  # показываем среднюю зарплату по вакансиям
+    utils.show_all_vacancies_info(db_handler)  # показываем все вакансии
 
-    show_highly_paid_vacancies(db)  # показываем вакансии с з/п выше средней
+    utils.show_avg_salary(db_handler)  # показываем среднюю зарплату по вакансиям
 
-    show_vacancies_by_keyword(db)  # показываем вакансии по ключевому слову
+    utils.show_highly_paid_vacancies(db_handler)  # показываем вакансии с з/п выше средней
+
+    utils.show_vacancies_by_keyword(db_handler)  # показываем вакансии по ключевому слову
 
 
 if __name__ == '__main__':

@@ -13,7 +13,7 @@ max_count_vacancies = 10
 
 JSON_DATA_DIR = os.path.join('data')
 JSON_FILE_NAME = 'data.json'
-DB_NAME = 'headhunter'
+
 SQL_DATA_DIR = os.path.join('sql', 'table_queries.sql')
 
 

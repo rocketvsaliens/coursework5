@@ -41,52 +41,12 @@ class HeadHunter:
                 vacancies = response.json()['items']
 
                 if vacancies:
-                    list_vacancies = self.__class__.organize_vacancy_info(vacancies)
-                    common_list_vacancies.extend(list_vacancies)
+                    common_list_vacancies.extend(vacancies)
 
             else:
                 print(f'Ошибка {response.status_code} при выполнении запроса')
 
         return common_list_vacancies
-
-    @staticmethod
-    def organize_vacancy_info(vacancy_data: list) -> list:
-        """
-        Организует данные о вакансиях в определённом виде
-        :param vacancy_data: список вакансий, полученный через API
-        :return: организованный список вакансий
-        """
-        organized_vacancy_list = []
-
-        for vacancy in vacancy_data:
-            vacancy_title = vacancy.get('name')
-            employer = vacancy.get('employer')['name']
-            vacancy_area = vacancy.get('area')['name']
-            vacancy_url = f"https://hh.ru/vacancy/{vacancy.get('id')}"
-            salary = vacancy.get('salary')
-            if not salary:
-                salary_from = 0
-                salary_to = 0
-            else:
-                salary_from = salary.get('from')
-                salary_to = salary.get('to')
-                if not salary_from:
-                    salary_from = salary_to
-                if not salary_to:
-                    salary_to = salary_from
-
-            vacancy_info = {
-                'vacancy_title': vacancy_title,
-                'employer': employer,
-                'vacancy_area': vacancy_area,
-                'vacancy_url': vacancy_url,
-                'salary_from': salary_from,
-                'salary_to': salary_to,
-            }
-
-            organized_vacancy_list.append(vacancy_info)
-
-        return organized_vacancy_list
 
     @staticmethod
     def save_vacancies_to_json(vacancy_list: list, filename: str) -> None:
